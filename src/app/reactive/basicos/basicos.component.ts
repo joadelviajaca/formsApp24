@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-basicos',
+  selector: 'app-basicos-reactive',
   standalone: true,
   imports: [],
   templateUrl: './basicos.component.html'
