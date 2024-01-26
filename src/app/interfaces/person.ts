@@ -1,9 +1,9 @@
 export interface Person{
     name: string;
-    favourites: Favorite[]
+    favourites: Favourite[]
 }
 
-export interface Favorite{
+export interface Favourite{
     id: number,
     name: string
 }

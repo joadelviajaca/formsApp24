@@ -24,11 +24,12 @@
     <div class="col-sm-9">
 
         <div class="input-group">
-            <input class="form-control"
+            <input class="form-control" name="fname" [(ngModel)]="newFavourite.name"
                    placeholder="Agregar favorito">
 
             <button class="btn btn-outline-primary"
-                    type="button">
+                    type="button"
+                    (click)="addFavourite()">
                 Agregar
             </button>
         </div>
