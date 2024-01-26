@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col">
 
-        <form autocomplete="off">
+        <form (ngSubmit)="submit()" autocomplete="off" #myForm="ngForm">
 
             <!-- Campo de producto -->
             <div class="mb-3 row">
@@ -17,12 +17,19 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Nombre del producto"
+                           name="product"
                            minlength="3"
-                           required>
+                           required
+                           ngModel
+                           #product
+                           (change)="isLetter(product.value)"
+                           >
+                    @if (notValid('product')) {
 
-                    <span class="form-text text-danger">
-                        Debe de ser de 3 letras
-                    </span>
+                        <span class="form-text text-danger">
+                            Debe de ser de 3 letras
+                        </span>
+                    }
                 </div>
             </div>
 
@@ -41,8 +48,10 @@
                            placeholder="Precio del producto"
                            min="0"
                            required
+                           ngModel
+                           name="price"
                            >
-                           <span class="form-text text-danger">
+                           <span *ngIf="notValid('price')" class="form-text text-danger">
                         Debe de ser mayor que cero
                     </span>
                 </div>
@@ -56,10 +65,10 @@
                            class="form-control"
                            placeholder="Existencias del producto"
                            ngModel
-                           name="existencias"
+                           name="stock"
                            min="0"
                            required>
-                           <span class="form-text text-danger">
+                           <span *ngIf="notValid('stock')"class="form-text text-danger">
                         Debe de ser mayor que cero
                     </span>
                 </div>
@@ -70,6 +79,7 @@
                 <div class="col">
                     <button type="submit"
                             class="btn btn-primary float-end"
+                            [disabled]="myForm.invalid"
                             >
                         Guardar
                     </button>
@@ -80,18 +90,19 @@
 
         </form>
 
-        <!-- <span>Valid</span>
-        <pre>{{myForm.valid}}</pre>
+        <span>Valid</span>
+        <pre>{{myForm['valid']}}</pre>
+        
 
         <span>Pristine</span>
-        <pre>{{myForm.pristine}}</pre>
+        <pre>{{myForm['pristine']}}</pre>
 
         <span>Touched</span>
-        <pre>{{myForm.touched}}</pre>
+        <pre>{{myForm['touched']}}</pre>
 
         <span>Value</span>
-        <pre>{{myForm.value | json}}</pre> -->
-
+        <pre>{{myForm['value']|json }}</pre>
+            
     </div>
 </div>
 
