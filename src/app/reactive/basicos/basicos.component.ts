@@ -21,13 +21,25 @@ export class BasicosComponent {
 
   myForm : FormGroup = this.fb.group(
     {
-      name: ['Patatas', [Validators.required, Validators.minLength(3)]],
-      price: [0],
-      stock: [0]
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: [0, [Validators.required, Validators.min(0)]],
+      stock: [0, [Validators.required, Validators.min(1)]]
     }
   )
 
   isValidField(field: string){
     return this.myForm.controls[field].errors && this.myForm.controls[field].touched
+  }
+
+  submit(){
+    if (this.myForm.valid) {
+      console.log('Formulario enviado')
+      this.myForm.reset({
+        name: 'Tomatoes'
+      })
+    }
+    else{
+      this.myForm.markAllAsTouched();
+    }
   }
 }
