@@ -16,18 +16,25 @@ export class DinamicosComponent {
   }
   favouriteId : number = 3;
 
-  newFavourite: Favourite = {
-    id: this.favouriteId,
-    name: ''
-  }
+  // newFavourite: Favourite = {
+  //   id: this.favouriteId,
+  //   name: ''
+  // }
+
+  name: string = '';
 
   delete(id:number){
     this.person.favourites = this.person.favourites.filter((favourite)=> favourite.id !== id)
   }
 
   addFavourite(){
-    this.person.favourites.push({...this.newFavourite});
+    const newFavourite: Favourite = {
+      id: this.favouriteId,
+      name: this.name
+    } 
+    this.person.favourites.push({...newFavourite});
     this.favouriteId++
+    this.name = ''
   }
 
 
