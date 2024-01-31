@@ -49,6 +49,7 @@ export class SwitchesComponent implements OnInit {
     // const { genero, notificaciones} = this.myForm.value
     // this.person = { genero, notificaciones}
     this.person = person
+    
   }
 
 }
