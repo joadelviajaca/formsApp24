@@ -9,30 +9,22 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 
 export const routes: Routes = [
-    { 
-        path: 'template',
-        children: [
-            { path: 'basicos', component: BasicosComponent },
-            { path: 'dinamicos', component: DinamicosComponent},
-            { path: 'switches', component: SwitchesComponent}
-        ]
-      },
-      { 
-        path: 'reactive',
-        children: [
-            { path: 'basicos', component: BasicosReactive },
-            { path: 'dinamicos', component: DinamicosReactive},
-            { path: 'switches', component: SwitchesReactive}
-        ]
-        
-      },
-      {
-        path: '',
-        redirectTo: 'template/basicos',
-        pathMatch: 'full'
-      },
-      {
-        path: '**',
-        component: NotFoundComponent
-      }
+  ,
+  {
+    path: 'reactive',
+    loadChildren: () => import('./reactive/routes').then(mod => mod.routes)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/routes').then(mod => mod.routes)
+  },
+  {
+    path: '',
+    redirectTo: 'template/basicos',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
