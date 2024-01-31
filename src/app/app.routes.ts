@@ -15,12 +15,12 @@ export const routes: Routes = [
       },
       { 
         path: 'reactive',
-        children: [
-            { path: 'basicos', component: BasicosReactive },
-            { path: 'dinamicos', component: DinamicosReactive},
-            { path: 'switches', component: SwitchesReactive}
-        ]
+        loadChildren: () => import('./reactive/routes').then( mod => mod.routes)
         
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./auth/routes').then( mod => mod.routes)
       },
       {
         path: '',
