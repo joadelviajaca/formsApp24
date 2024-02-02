@@ -20,7 +20,7 @@ export class RegisterComponent {
 
   myForm: FormGroup = this.fb.group({
     name: ['', [Validators.required, Validators.pattern(this.validatorsService.nameSurnamePattern)]],
-    email: ['', [Validators.required, Validators.email], this.emailValidatorService],
+    email: ['', [Validators.required, Validators.email], [this.emailValidatorService]],
     login: ['', [Validators.required, this.validatorsService.forbiddenNameValidator('fran')]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]]
@@ -35,6 +35,10 @@ export class RegisterComponent {
   submit(){
     this.myForm.markAllAsTouched();
     console.log(this.myForm.value)
+    if(this.myForm.valid){
+      //enviarlo a la api
+      console.log('Enviado')
+    }
   }
 
 }

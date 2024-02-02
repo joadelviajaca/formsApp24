@@ -99,13 +99,16 @@
 
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-primary float-end">Guardar</button>
+                    <button class="btn btn-primary float-end"
+                    >Guardar</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 <h2>Form Valid: {{ myForm.valid }}</h2>
+<h2>Form Status: {{ myForm.status }}</h2>
+<h2>Form Pending: {{ myForm.pending }}</h2>
 <h2>Form errors: </h2>
 <pre> {{myForm.errors |json}}
 
