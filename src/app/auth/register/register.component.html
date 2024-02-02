@@ -48,11 +48,17 @@
                     <input type="text" 
                     class="form-control" 
                     placeholder="Login del usuario"
-                    formControlName="password">
+                    formControlName="login">
 
             
 
                 </div>
+                @if (invalidField('login')) {
+
+                    <span class="form-text text-danger">
+                        No puedes utilizar ese login
+                    </span>
+                }   
             </div>
 
             <div class="row mb3">
@@ -61,19 +67,34 @@
                     <input type="password" 
                     class="form-control" 
                     placeholder="Contraseña del usuario"
-                    formControlName="confirmPassword">
-
-
+                    formControlName="password">
+                    
                 </div>
+                @if (invalidField('password')) {
+                    <span class="form-text text-danger">
+
+                        La constraseña debe tener 6 caracteres
+                    </span>
+                }
             </div>
 
             <div class="row mb3">
                 <label class="col-sm-3 col-form-label">Confirmar contraseña</label>
                 <div class="col-sm-9">
-                    <input type="password" class="form-control" placeholder="Confirmar contraseña del usuario">
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        placeholder="Confirmar contraseña del usuario"
+                        formControlName="confirmPassword">
 
 
                 </div>
+                @if (invalidField('confirmPassword')) {
+                    <span class="form-text text-danger">
+
+                        Las constraseñas deben ser iguales
+                    </span>
+                }
             </div>
 
             <div class="row">
@@ -84,3 +105,12 @@
         </form>
     </div>
 </div>
+<h2>Form Valid: {{ myForm.valid }}</h2>
+<h2>Form errors: </h2>
+<pre> {{myForm.errors |json}}
+
+<h5>Username</h5>
+<pre> {{myForm.controls['login']?.errors | json}}</pre>
+
+<h5>Email</h5>
+<pre>{{ myForm.controls['email'].errors | json }}</pre>

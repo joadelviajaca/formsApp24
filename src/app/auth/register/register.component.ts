@@ -1,26 +1,30 @@
+import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ValidatorsService } from '../../shared/validators/validators.service';
+import { ValidateEmailService } from '../../shared/validators/validate-email.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, JsonPipe],
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
 
-  constructor(private fb: FormBuilder){}
+  constructor(
+    private fb: FormBuilder, 
+    private validatorsService: ValidatorsService,
+    private emailValidatorService: ValidateEmailService){}
 
-  nameSurnamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+)'
-  emailPattern         : string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
 
   myForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(this.nameSurnamePattern)]],
-    email: ['', [Validators.required, Validators.email]],
-    login: ['', [Validators.required]],
-    password: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.pattern(this.validatorsService.nameSurnamePattern)]],
+    email: ['', [Validators.required, Validators.email], this.emailValidatorService],
+    login: ['', [Validators.required, this.validatorsService.forbiddenNameValidator('fran')]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
     confirmPassword: ['', [Validators.required]]
-  })
+  },{validators: [this.validatorsService.equalFields('password', 'confirmPassword')]})
 
   invalidField(field: string){
     return this.myForm.get(field)?.invalid 
