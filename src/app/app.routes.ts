@@ -9,26 +9,30 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 
 export const routes: Routes = [
-    { 
-        path: 'template',
-        loadChildren: () => import('./template/routes').then( mod => mod.routes)
-      },
-      { 
-        path: 'reactive',
-        loadChildren: () => import('./reactive/routes').then( mod => mod.routes)
-        
-      },
-      {
-        path: 'auth',
-        loadChildren: () => import('./auth/routes').then( mod => mod.routes)
-      },
-      {
-        path: '',
-        redirectTo: 'template/basicos',
-        pathMatch: 'full'
-      },
-      {
-        path: '**',
-        component: NotFoundComponent
-      }
+  {
+    path: 'countries',
+    loadComponent: () => import('./countries/countries.component').then(mod => mod.CountriesComponent)
+  },
+  {
+    path: 'reactive',
+    loadChildren: () => import('./reactive/routes').then(mod => mod.routes)
+
+  },
+  {
+    path: 'template',
+    loadChildren: () => import('./template/routes').then(mod => mod.routes)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/routes').then(mod => mod.routes)
+  },
+  {
+    path: '',
+    redirectTo: 'template/basicos',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
