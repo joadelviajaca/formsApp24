@@ -31,6 +31,23 @@ export class RegisterComponent {
             && this.myForm.get(field)?.touched;
 
   }
+  get emailErrorMsg(): string {
+    const errors = this.myForm.get('email')?.errors ;
+    let errorMsg: string = '';
+    if(errors){
+      if( errors['required']){
+        errorMsg = 'El email es obligatorio';
+      }
+      else if(errors['email']){
+        errorMsg = 'El email no tiene formato de correo';
+      }
+      else if(errors['emailTaken']){
+        errorMsg = 'El email ya está en uso'
+      }
+      
+    }
+    return errorMsg;
+  }
 
   submit(){
     this.myForm.markAllAsTouched();
