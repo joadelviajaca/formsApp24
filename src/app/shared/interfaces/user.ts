@@ -1,6 +1,7 @@
 export interface Auth {
-    user:  User;
-    token: string;
+    user?:  User;
+    token?: string;
+    msg?: string;
 }
 
 export interface User {
