@@ -16,19 +16,42 @@
         </div>    
     </div>
 
-    <div class="row mb-3">
-        <div class="col">
-            <label class="form-label">País:</label>
-            <select 
-                class="form-control"
-                formControlName="country">
-                <option value=""> --Seleccione el país --</option>
-                @for (country of countries; track $index) {
-                    <option [value]="country.ccn3">{{country.name.common}}</option>
-                }
-            </select>
-        </div>    
-    </div>
+    @if (countries.length) {
+
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label">País:</label>
+                <select 
+                    class="form-control"
+                    formControlName="country">
+                    <option value=""> --Seleccione el país --</option>
+                    @for (country of countries; track $index) {
+                        <option [value]="country.ccn3">{{country.name.common}}</option>
+                    }
+                </select>
+            </div>    
+        </div>
+    }
+
+    @if (borders.length) {
+
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label">Frontera:</label>
+                <select 
+                    class="form-control"
+                    formControlName="border">
+                    <option value=""> --Seleccione el paíß fronterizo --</option>
+                    @for (border of borders; track $index) {
+                        <option [value]="border">{{border}}</option>
+                    }
+                </select>
+            </div>    
+        </div>
+    }
+
     
     <div class="row">
         <div class="col">
