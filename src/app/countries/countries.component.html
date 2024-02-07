@@ -45,11 +45,18 @@
                     formControlName="border">
                     <option value=""> --Seleccione el paíß fronterizo --</option>
                     @for (border of borders; track $index) {
-                        <option [value]="border">{{border}}</option>
+                        <option [value]="border.ccn3">{{border.name.common}}</option>
                     }
                 </select>
             </div>    
         </div>
+    }
+
+    @if (loading) {
+        <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
     }
 
     

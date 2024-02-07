@@ -15,7 +15,8 @@ export class CountriesComponent implements OnInit {
 
   regions: string[] = [];
   countries: SmallCountry[] = [];
-  borders: string[] = [];
+  borders: SmallCountry[] = [];
+  loading: boolean = true;
 
   constructor(private fb: FormBuilder,
     private countriesService: CountriesService) { }
@@ -52,10 +53,11 @@ export class CountriesComponent implements OnInit {
     this.myForm.get('country')?.valueChanges
     .pipe(
       tap( code => this.myForm.get('border')?.reset('') ),
-      switchMap( code => this.countriesService.getBordersByCountry(code))
+      switchMap( code => this.countriesService.getBordersByCountry(code)),
+      switchMap( borders => this.countriesService.getCountriesByCode(borders?.borders!))
     )
     .subscribe({
-      next: borders => this.borders = borders?.borders || []
+      next: countries => this.borders = countries.sort((a,b)=> (a.name.common.toLocaleLowerCase().localeCompare(b.name.common)))
     })
   }
 
