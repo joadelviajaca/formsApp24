@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CountriesService } from '../shared/services/countries.service';
 import { JsonPipe, LowerCasePipe } from '@angular/common';
 import { SmallCountry } from '../shared/interfaces/countries';
-import { switchMap, tap } from 'rxjs';
+import { delay, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-countries',
@@ -16,7 +16,7 @@ export class CountriesComponent implements OnInit {
   regions: string[] = [];
   countries: SmallCountry[] = [];
   borders: SmallCountry[] = [];
-  loading: boolean = true;
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder,
     private countriesService: CountriesService) { }
@@ -40,24 +40,41 @@ export class CountriesComponent implements OnInit {
     this.myForm.get('region')?.valueChanges
       .pipe(
         tap( region => {
-          this.myForm.get('country')?.reset(''),
-          console.log('Region en tap: ',region)
+          this.myForm.get('country')?.reset('');
+          this.loading = true;
+          
         }),
+        // delay(2000),
         switchMap( region => this.countriesService.getCountriesByRegion(region))
       )
       .subscribe({
-        next: countries => this.countries = countries.sort((a,b)=> (a.name.common.toLocaleLowerCase().localeCompare(b.name.common))),
-        error: error => console.log(error)
+        next: countries => {
+          this.countries = countries.sort((a,b)=> (a.name.common.toLocaleLowerCase().localeCompare(b.name.common)));
+          this.loading = false;
+        },
+        error: error => {
+          console.log(error);
+          this.loading = false;
+        }
       })
 
     this.myForm.get('country')?.valueChanges
     .pipe(
-      tap( code => this.myForm.get('border')?.reset('') ),
+      tap( code => {
+        this.myForm.get('border')?.reset('')
+        this.loading = true
+       } ),
       switchMap( code => this.countriesService.getBordersByCountry(code)),
       switchMap( borders => this.countriesService.getCountriesByCode(borders?.borders!))
     )
     .subscribe({
-      next: countries => this.borders = countries.sort((a,b)=> (a.name.common.toLocaleLowerCase().localeCompare(b.name.common)))
+      next: countries => {
+        this.borders = countries.sort((a,b)=> (a.name.common.toLocaleLowerCase().localeCompare(b.name.common)));
+        this.loading = false;
+      },
+      error: error => {
+        this.loading = false;
+      }
     })
   }
 

@@ -39,6 +39,9 @@ export class CountriesService {
     if (!borders){
       return of([])
     }
+    else if(!borders.length){
+      return of([])
+    }
 
     const requests: Observable<SmallCountry>[] = [];
     borders.forEach( code => {
