@@ -1,7 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SideMenuComponent } from '../../shared/side-menu/side-menu.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule, JsonPipe } from '@angular/common';
+import { AuthService } from '../../auth/services/auth.service';
+import { User } from '../../auth/interfaces/user';
 
 @Component({
   selector: 'app-basicos',
@@ -9,8 +11,16 @@ import { CommonModule, JsonPipe } from '@angular/common';
   imports: [SideMenuComponent, FormsModule, JsonPipe, CommonModule],
   templateUrl: './basicos.component.html'
 })
-export class BasicosComponent {
+export class BasicosComponent implements OnInit{
   @ViewChild('myForm') myForm!: NgForm
+
+  user!: User;
+
+  constructor(private authService: AuthService){}
+
+  ngOnInit(): void {
+    this.user = this.authService.user;
+  }
 
   isLetter(test: string):void{
     const pattern = new RegExp('^[A-Z]+$', 'i');

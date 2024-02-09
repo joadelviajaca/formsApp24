@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService){}
+    private authService: AuthService,
+    private router: Router){}
 
 
   myForm: FormGroup = this.fb.group({
@@ -27,7 +29,19 @@ export class LoginComponent {
       const {email, password} = this.myForm.value
       this.authService.login(email, password)
       .subscribe(
-        resp => console.log(resp)
+        resp => {
+          if (resp===true){
+            this.router.navigateByUrl('/template')
+          }
+          else{
+            Swal.fire({
+              title: 'Error!',
+              text: <string>resp,
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            })
+          }
+        }
       )
     }
     else{
