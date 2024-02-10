@@ -33,12 +33,20 @@ export class AuthService {
       )
   }
 
-  validateToken(){
+  validateToken(): Observable<boolean>{
     const url = `${this.baseUrl}/renew`;
     const headers = new HttpHeaders()
       .set('x-token', localStorage.getItem('token') || '');
 
-    return this.http.get(url, {headers});
+    return this.http.get<Auth>(url, {headers})
+    .pipe(
+      map( resp => {
+        localStorage.setItem('token', resp.token!);
+        this._user = resp.user!
+        return true;
+      }),
+      catchError(err => of(false))
+    )
 
   }
 }

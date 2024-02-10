@@ -6,6 +6,7 @@ import { BasicosComponent as BasicosReactive } from './reactive/basicos/basicos.
 import { DinamicosComponent as DinamicosReactive } from './reactive/dinamicos/dinamicos.component';
 import { SwitchesComponent as SwitchesReactive } from './reactive/switches/switches.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { validateTokenGuard } from './guards/validate-token.guard';
 
 
 export const routes: Routes = [
@@ -20,7 +21,8 @@ export const routes: Routes = [
   },
   {
     path: 'template',
-    loadChildren: () => import('./template/routes').then(mod => mod.routes)
+    loadChildren: () => import('./template/routes').then(mod => mod.routes),
+    canMatch: [validateTokenGuard]
   },
   {
     path: 'auth',
