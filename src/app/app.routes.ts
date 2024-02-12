@@ -1,15 +1,13 @@
 import { Routes } from '@angular/router';
-import { BasicosComponent } from './template/basicos/basicos.component';
-import { DinamicosComponent } from './template/dinamicos/dinamicos.component';
-import { SwitchesComponent } from './template/switches/switches.component';
-import { BasicosComponent as BasicosReactive } from './reactive/basicos/basicos.component';
-import { DinamicosComponent as DinamicosReactive } from './reactive/dinamicos/dinamicos.component';
-import { SwitchesComponent as SwitchesReactive } from './reactive/switches/switches.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { validateTokenGuard } from './guards/validate-token.guard';
 
 
 export const routes: Routes = [
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/routes').then(mod => mod.routes)
+  },
   {
     path: 'countries',
     loadComponent: () => import('./countries/countries.component').then(mod => mod.CountriesComponent)
@@ -25,8 +23,8 @@ export const routes: Routes = [
     canMatch: [validateTokenGuard]
   },
   {
-    path: 'auth',
-    loadChildren: () => import('./auth/routes').then(mod => mod.routes)
+    path: 'users',
+    loadChildren: () => import('./users/routes').then(mod => mod.routes)
   },
   {
     path: '',

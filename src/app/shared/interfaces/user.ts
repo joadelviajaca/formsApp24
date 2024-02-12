@@ -12,3 +12,8 @@ export interface User {
     state: boolean;
     uid:   string;
 }
+
+export interface UsersResponse {
+    total: number;
+    users: User[];
+}
