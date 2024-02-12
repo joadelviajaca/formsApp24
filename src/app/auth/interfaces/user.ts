@@ -3,6 +3,11 @@ export interface LoginResponse {
     token: string;
 }
 
+export interface UsersList {
+    total: number;
+    users: User[];
+}
+
 export interface User {
     name:  string;
     email: string;

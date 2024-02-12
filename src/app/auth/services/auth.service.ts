@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginResponse, User } from '../interfaces/user';
 import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,10 @@ export class AuthService {
     return { ...this._user }
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
-  storageUser(resp: LoginResponse){
+  storageUser(resp: LoginResponse) {
     localStorage.setItem('token', resp.token)
     this._user = resp.user
   }
@@ -48,5 +50,12 @@ export class AuthService {
         catchError(err => of(false))
       )
 
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    // localStorage.clear()
+    this.router.navigateByUrl('/auth/login')
+    
   }
 }
