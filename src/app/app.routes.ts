@@ -1,17 +1,13 @@
 import { Routes } from '@angular/router';
-import { BasicosComponent } from './template/basicos/basicos.component';
-import { DinamicosComponent } from './template/dinamicos/dinamicos.component';
-import { SwitchesComponent } from './template/switches/switches.component';
-import { BasicosComponent as BasicosReactive } from './reactive/basicos/basicos.component';
-import { DinamicosComponent as DinamicosReactive } from './reactive/dinamicos/dinamicos.component';
-import { SwitchesComponent as SwitchesReactive } from './reactive/switches/switches.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { jwtGuard } from './shared/guardians/jwt.guard';
 
 
 export const routes: Routes = [
     { 
         path: 'template',
-        loadChildren: () => import('./template/routes').then( mod => mod.routes)
+        loadChildren: () => import('./template/routes').then( mod => mod.routes),
+        canMatch: [jwtGuard]
       },
       { 
         path: 'reactive',
