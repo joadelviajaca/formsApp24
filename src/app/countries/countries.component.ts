@@ -4,11 +4,12 @@ import { CountriesService } from '../shared/services/countries.service';
 import { JsonPipe, LowerCasePipe } from '@angular/common';
 import { SmallCountry } from '../shared/interfaces/countries';
 import { delay, switchMap, tap } from 'rxjs';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-countries',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, LowerCasePipe],
+  imports: [ReactiveFormsModule, JsonPipe, LowerCasePipe, NgSelectModule],
   templateUrl: './countries.component.html'
 })
 export class CountriesComponent implements OnInit {
@@ -81,7 +82,7 @@ export class CountriesComponent implements OnInit {
   myForm: FormGroup = this.fb.group({
     region: ['', [Validators.required]],
     country: ['', [Validators.required]],
-    border: ['', [Validators.required]]
+    borders: [[], [Validators.required]]
   })
 
 
