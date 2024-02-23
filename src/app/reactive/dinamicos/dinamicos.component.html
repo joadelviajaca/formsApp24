@@ -44,7 +44,7 @@
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Favoritos</label>
         <div class="col-sm-9" formArrayName="favourites">
-            @for (favourite of favourites.controls; track $index) {
+            @for (favourite of favourites.controls; track favourite.value) {
 
                 <div class="input-group mb-1" >
                     <!-- <div class="input-group mb-1" *ngFor(let favourite of favourties.controls; let i = index ) -->
