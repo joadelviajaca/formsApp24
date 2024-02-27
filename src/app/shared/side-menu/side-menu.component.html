@@ -61,5 +61,10 @@
     {{ item.texto }}
 </li>
 </ul>
+@if (authenticated()) {
 
-<button class="btn btn-primary mt-4" type="button" (click)="logout()">Logout</button>
+    <button class="btn btn-primary mt-4" type="button" (click)="logout()">Logout</button>
+    <br>
+    <span class="badge bg-success">{{user()?.login}}</span>
+    
+}

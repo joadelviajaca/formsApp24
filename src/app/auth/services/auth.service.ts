@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Signal, WritableSignal, computed, signal } from '@angular/core';
 import { LoginResponse, User } from '../interfaces/user';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -10,18 +10,32 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   private baseUrl = 'http://localhost:3000/auth';
-  private _user!: User;
-
-  get user(): User {
-    return { ...this._user }
+  private _user = signal<User|null>(null);
+  user(): Signal<User|null> {
+    return this._user.asReadonly();
   }
 
+  private _authenticated = signal<boolean>(false); 
+  authenticated = computed(() => this._authenticated.asReadonly()); 
+
+  // get user(): User {
+  //   return { ...this._user }
+  // }
+
+  // user = computed(()=> this._user.asReadonly)
+
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private router: Router) {
+                if (localStorage.getItem('token')) {
+                  this.validateToken()
+                  .subscribe()
+                }
+               }
 
   storageUser(resp: LoginResponse) {
     localStorage.setItem('token', resp.token)
-    this._user = resp.user
+    this._user.set(resp.user) ;
+    this._authenticated.set(true);
   }
 
   login(email: string, password: string): Observable<Boolean | string> {
@@ -54,6 +68,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this._authenticated.set(false);
     // localStorage.clear()
     this.router.navigateByUrl('/auth/login')
     

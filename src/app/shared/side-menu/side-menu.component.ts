@@ -1,7 +1,8 @@
-import { NgFor } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { JsonPipe, NgFor } from '@angular/common';
+import { Component, Signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
+import { User } from '../../auth/interfaces/user';
 
 interface MenuItem {
   texto: string;
@@ -11,7 +12,7 @@ interface MenuItem {
 @Component({
   selector: 'app-side-menu',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgFor],
+  imports: [RouterLink, RouterLinkActive, NgFor, JsonPipe],
   templateUrl: './side-menu.component.html',
   styles: [
     `
@@ -23,7 +24,12 @@ interface MenuItem {
 })
 export class SideMenuComponent {
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService){
+    
+  }
+
+  authenticated = this.authService.authenticated();
+  user = this.authService.user();
 
   templateMenu: MenuItem[] = [
     {

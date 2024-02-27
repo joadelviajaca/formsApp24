@@ -14,12 +14,12 @@ import { User } from '../../auth/interfaces/user';
 export class BasicosComponent implements OnInit{
   @ViewChild('myForm') myForm!: NgForm
 
-  user!: User;
+  user = this.authService.user();
 
   constructor(private authService: AuthService){}
 
   ngOnInit(): void {
-    this.user = this.authService.user;
+    this.user = this.authService.user();
   }
 
   isLetter(test: string):void{
